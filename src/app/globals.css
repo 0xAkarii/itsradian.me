@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/**
+ * Design tokens — dark CLI terminal palette.
+ * Change the values below to re-theme the whole site.
+ */
+:root {
+  --bg: #08070d; /* primary background    */
+  --surface: #100b19; /* secondary background  */
+  --accent: #6d28d9; /* deep purple           */
+  --highlight: #a78bfa; /* soft purple           */
+  --fg: #ede9f5; /* primary text          */
+  --muted: #9a91aa; /* secondary text        */
+  --line: #2b203d; /* borders               */
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-highlight: var(--highlight);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, "Liberation Mono", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* keeps anchored sections clear of the sticky header */
+    scroll-padding-top: 7rem;
+    background-color: var(--bg);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    color: var(--fg);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--highlight);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+}
+
+/* Long technical strings (URLs, hashes) must never blow up the layout. */
+.wrap-tech {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Blinking terminal cursor — restrained, decorative only. */
+.caret {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1em;
+  margin-left: 0.25rem;
+  translate: 0 0.15em;
+  background-color: var(--highlight);
+  animation: caret-blink 1.15s steps(1, end) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .caret {
+    animation: none;
+    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
